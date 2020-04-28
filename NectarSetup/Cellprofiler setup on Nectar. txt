@@ -1,0 +1,117 @@
+## Create ssh keys: we use create ssh keys through mac terminal:
+## Different instances could share a same pair of keys:
+cd
+## check if .ssh folder has been created, if not: mkdir .ssh
+ls -a
+ssh-keygen -t rsa -f B1_Plate2
+## Keep a record of your key passphrase: Mine is Lu
+
+## Create nectar instance: here we set up nectar instance by deploying an Rstudio envrionment.
+## Login in nectarcloud: https://dashboard.rc.nectar.org.au/
+
+## Upload the key pairs: Go to Project, Computer, Key Pairs, then import public key.
+
+## Deploy the environment: Go to Applications,Applications, Environments, then Create Environment, here we name our environment as B1_Plate2
+## Drag the Rstudio components to our environment.
+## Here we set up c3.xxlarge instance flavor, select the key we uploaded, choose the area Tasmania.
+## Host name: b1p2, DNS zone: the project name: cptmc-crop-seq-2019.cloud.edu.au
+## Attach the volume later.
+## Username: b1p2, password: B1p2_0108, application name: B1p2. Then create, hit Deploy this environment. Here we should wait about 10 minutes.
+
+## Create Volumes: Go to Project, Volumes, then create volumes: B1p2, here we allocate 300 GB, then manage the attachment, attach it to our instance b1p2.
+
+## Creating an alias for our IP address:
+## Open a terminal window in our mac:
+nano ~/.ssh/config, then input:
+Host b1p2
+## input IP address:
+HostName: 144.x.xxx.xxx
+User b1p2
+IdentityFile ~/.ssh/B1_Plate2
+## Save the file by control+X
+
+## Connect to our instance through terminal:
+ssh b1p2
+## Mount out hard drive to our instance folder, for the first time we set up an instance, make sure we have the right file system type and start from a clean state
+sudo lsblk -f
+sudo mkfs.ext4 /dev/vdb
+sudo mkdir ~/Dataset
+sudo mount /dev/vdb ~/Dataset
+sudo chown b1p2 ~/Dataset
+
+## Install Cellprofiler:
+##https://github.com/CellProfiler/CellProfiler/wiki/Source-installation-(Ubuntu-16.04-LTS)
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install \
+build-essential    \
+cython             \
+git                \
+libmysqlclient-dev \
+libhdf5-dev        \
+libxml2-dev        \
+libxslt1-dev       \
+openjdk-8-jdk      \
+python-dev         \
+python-pip         \
+python-h5py        \
+python-matplotlib  \
+python-mysqldb     \
+python-scipy       \
+python-numpy       \
+python-pytest      \
+python-vigra       \
+python-wxgtk3.0    \
+python-zmq
+sudo apt-get install screen
+
+git clone https://github.com/CellProfiler/CellProfiler.git
+cd CellProfiler
+
+## Here we use the latest version 3.1.9 (20200110)
+git checkout v3.1.9
+## Be sure to use java 8:
+sudo update-alternatives --config java
+
+sudo pip install .
+
+
+
+## Test run with the example:
+cd cellprofiler/data/examples
+find $PWD/ExampleFly/images/ -name "*.TIF" > filelist.txt
+cat filelist.txt
+cellprofiler -r -c -p ExampleFly/ExampleFly.cppipe --file-list=$PWD/filelist.txt -o .
+
+
+## Upload our Dataset to nectar instance, open a new terminal window on our mac, here I upload my dataset B1_Plate2 foler to the
+scp -i ~/.ssh/B1_Plate2 -r /Volumes/qinyil/Cellpainting\ Images/20191216/Tiffs/hTMC_B1_Plate2 b1p2@144.6.227.150:Dataset
+## Upload our Pipelines (pipelines, sh file, and illumiantion correction files):
+scp -i ~/.ssh/B1_Plate2 -r ~/Desktop/Pipelines b1p2@144.6.227.150:Dataset
+
+## Create images direction files:
+find ~/Dataset/Pipelines/illumination/ -name "*.npy" > filelisti.txt
+find ~/Dataset/hTMC_B1/hTMC_B1_Plate2/ -name "*.tif" > filelist2.txt
+cat filelisti.txt filelist2.txt > filelist_2.txt
+
+
+find ~/Dataset/hTMC_B1/illumination/ -name "*.npy" > filelisti.txt
+find ~/Dataset/hTMC_B1/hTMC_B1_Plate1/ -name "*.tif" > filelist1.txt
+cat filelisti.txt filelist1.txt > filelist_1.txt
+
+## Double check the sh file carefully: the images to be analyzed, the file directory.
+
+## Run the analysis through screen
+screen
+sh
+
+
+## compress output
+zip -r compressed_filename.zip foldername
+
+## free memory
+sudo sysctl -w vm.drop_caches=3
+
+scp -i ~/.ssh/Nectar_Key1 b1p1@144.6.227.47:Dataset/hTMC_B1/d2p1.zip ~/Desktop 
+scp -i ~/.ssh/Nectar_Key5 -r d3p1@144.6.225.255:Dataset
+
