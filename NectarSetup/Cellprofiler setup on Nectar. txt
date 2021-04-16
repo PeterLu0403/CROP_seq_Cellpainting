@@ -84,7 +84,7 @@ cat filelist.txt
 cellprofiler -r -c -p ExampleFly/ExampleFly.cppipe --file-list=$PWD/filelist.txt -o .
 
 
-## Upload our Dataset to nectar instance, open a new terminal window on our mac, here I upload my dataset B1_Plate2 foler to the
+## Upload our Dataset to nectar instance, open a new terminal window on our mac, here I upload my dataset B1_Plate2 folder to the
 scp -i ~/.ssh/B1_Plate2 -r /Volumes/qinyil/Cellpainting\ Images/20191216/Tiffs/hTMC_B1_Plate2 b1p2@144.6.227.150:Dataset
 ## Upload our Pipelines (pipelines, sh file, and illumiantion correction files):
 scp -i ~/.ssh/B1_Plate2 -r ~/Desktop/Pipelines b1p2@144.6.227.150:Dataset
