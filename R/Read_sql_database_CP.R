@@ -1,4 +1,4 @@
-## This script is to extract features from individual sqlite database and merge them together
+# This script is to extract features from individual sqlite database and merge them together
 library(RSQLite)
 library(dplyr)
 library(stringr)
@@ -62,5 +62,3 @@ for (i in 1:length(files)){
 # Merged all batches of plates:
 df<- do.call(rbind,df_f)
 write.csv(df,"Raw_merged.csv",row.names = F)
-
-
