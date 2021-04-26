@@ -6,7 +6,7 @@ This repository describes the procedures of processing the image datasets of CRO
 
 To extract the features, the CellProfiler were deployed in Linux environments in the Nectar Cloud (The National eResearch Collaboration Tools and Resources project). [Here](NectarSetup/), 8 virtual machines were set up to process the image datasets, each of which has 32 virtual CPUs and 64 GB of RAM. The process took a few days to finish and the analysis output a set of SQLite files. In total, the experiment contains 3 batches and each batch contains 5 plates of cells. 
 
-Here is the [script](R/Read_sql_database_CP.R) of generating and merging *.csv files from the sqlite database. The [metadata](metadata/) of which gene was knockout is also added to the exported *.csv files.  
+[Read the sqlite database and generate *.csv file](R/Read_sql_database_CP.R) which contains features of all cells, and the [metadata](metadata/) of which gene was knockout is also added to the exported *.csv files.  
 
 ### Data preparation
 
