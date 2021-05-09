@@ -20,7 +20,7 @@ The groups of all nontargeting controls were filtered to explore the distributio
 ### Normalization
 The value of each feature was normalized by subtracting the median value of each feature from the control group and dividing by the corresponding median absolute deviation (MAD)*1.4826 in each plate, respectively.
 ### Filtering by Spearman's rank correlation
-The Spearman's rank correlation was calculated in each group. To get rid of the non-correlated cells from each group, the mean absolute Spearman correlation value was calculated and the cutoff was set as 0.15.
+The Spearman's rank correlation of individual cells was calculated of each group. To get rid of the non-correlated cells from each group, the mean absolute Spearman correlation value of each group was calculated and the cutoff was set as 0.15.
 
 This figure presents the mean absolute Spearman's rank correlation values of each group:
 ![](Figures/mean_absolute_Spearmans_cor.png)
