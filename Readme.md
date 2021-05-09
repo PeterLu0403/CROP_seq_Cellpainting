@@ -8,11 +8,8 @@ To extract the features, the CellProfiler were deployed in Linux environments in
 
 [Read the sqlite database and generate *.csv file](R/Read_sql_database_CP.R) which contains features of all cells, and the [metadata](metadata/) of which gene was knockout is also added to the exported *.csv files.  
 
+
 ### Data preparation
-
-
-
-
 
 ### Transformation, normalization and batch-effect evaluation
 ## Data analysis
