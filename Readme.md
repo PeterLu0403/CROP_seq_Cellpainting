@@ -20,7 +20,7 @@ The groups of all nontargeting controls were filtered to explore the distributio
 ### Normalization
 The value of each feature was normalized by subtracting the median value of each feature from the control group and dividing by the corresponding median absolute deviation (MAD)*1.4826 in each plate, respectively.
 ### Filtering by Spearman's rank correlation
-The Spearman's rank correlation of individual cells was calculated of each group. To get rid of the non-correlated cells from each group, the mean absolute Spearman correlation value of each group was calculated and the cutoff was set as 0.15.
+The Spearman's rank correlation of individual cells was calculated for each group. To get rid of the non-correlated cells from each group, the mean absolute Spearman correlation value of each group was calculated and the cutoff was set as 0.15.
 
 This figure presents the mean absolute Spearman's rank correlation values of each group:
 ![](Figures/mean_absolute_Spearmans_cor.png)
@@ -30,6 +30,21 @@ The figures of Spearman's rank correlation of human nontargeting controls before
 
 
 
-##
 ## Data analysis
-###
+Here, we aim to find out the most representive features for each groups or each clusters. <br />
+The student t-test was performed for each features of each groups versus the control to filter the features roughly. There are some pval reach the lower limit of R, which returns to a value of 0. 
+This figure plots the pval of each features of each groups versus the control. The x labels were clutered and colored, the grey ones are AreaShape features, the blue ones are the nucleus features which stained by Hoechst 33342, the green ones are the ER features which stained by Concanavalin A, the cyan ones are the RNA features which stained by Syto14, the red ones are the AGP features which stained by Wheat Germ Agglutinin and Phalloidin, the pink ones are the Mitochondrial features which stained by Mitotracker, and the black ones are the correlation features of each pair of the channel above. <br />
+![](Figures/t_test_pval.png)
+
+
+A volcano plot was also drawn of each groups, the x-axis is the difference between the mean value of each feature in the group versus the mean value of each feature in the control, and the y-axis is the -log10 value of each comparison. Here the cutoff of the pval was set as 1e-40, and the cutoff of the diff was set as +/- 1.5. Below figures are the volcano plots of the CAV1, CAV2, and TES group. 
+
+![](Figures/volcano_cav1.png)
+![](Figures/volcano_cav2.png)
+![](Figures/volcano_tes.png)
+
+
+
+
+
+
